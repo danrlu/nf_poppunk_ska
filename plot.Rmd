@@ -1,0 +1,51 @@
+---
+title: "Plot Poppunk and SKA"
+author: Dan Lu
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set( warning=FALSE, message=FALSE)
+```
+
+
+```{r include=FALSE}
+library(tidyverse)
+library(magrittr)
+library(plotly)
+options(tibble.width = Inf)
+options(scipen=999)
+```
+
+
+```{r}
+d_pop <- read_delim("dist.txt", 
+     delim = "\t", escape_double = FALSE, show_col_types = FALSE,
+     trim_ws = TRUE)
+
+summary <- read.delim("summary.txt")
+
+ps = ggplot(summary) + geom_point(aes(x=Total.kmers, y=GC.Content)) + ylim(0,1) 
+
+ggplotly(ps)
+
+
+d_snp1 <- read.delim("distances.distances.tsv") 
+
+d_snp2 = rename(d_snp1, Sample.2=Sample.1, Sample.1=Sample.2)
+
+d_snp = bind_rows(d_snp1, d_snp2)
+
+d = left_join(d_pop, d_snp, by=c("Query"="Sample.1", "Reference"="Sample.2"))
+
+p = ggplot(d) + geom_point(aes(x=Core, y=Accessory, pl1=Query, pl2=Reference, color=SNPs), size = 0.5, alpha=0.4) 
+
+ggplotly(p)
+```
+
+
+```{r}
+sessionInfo()
+```
