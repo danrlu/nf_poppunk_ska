@@ -2,12 +2,7 @@
 
 nextflow.enable.dsl=2
 
-// This reads samples from r_file.txt but it doesn't carry a path to the actual fastq file. can write the path to r_file.txt
-
-
-// Read sample sheet
-//params.input_folder = "${workflow.launchDir}"
-params.input_folder = "${workflow.launchDir}/data_ena"
+params.input_folder = "${workflow.launchDir}"
 params.sample_sheet = "${params.input_folder}/r_file.txt"
 params.plot_rmd = "${workflow.projectDir}/plot.Rmd"
 params.ouput_folder = "${params.input_folder}/pop_ska"
