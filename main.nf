@@ -9,7 +9,7 @@ nextflow.enable.dsl=2
 //params.input_folder = "${workflow.launchDir}"
 params.input_folder = "${workflow.launchDir}/data_ena"
 params.sample_sheet = "${params.input_folder}/r_file.txt"
-params.plot_rmd = "${workflow.launchDir}/plot.Rmd"
+params.plot_rmd = "${workflow.projectDir}/plot.Rmd"
 params.ouput_folder = "${params.input_folder}/pop_ska"
 
 plot_rmd = Channel.fromPath(params.plot_rmd, checkIfExists: true)
